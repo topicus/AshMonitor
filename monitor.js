@@ -8,20 +8,20 @@ var phantom = require('phantom'),
 var smtpTransport = nodemailer.createTransport("SMTP",{
     service: "Gmail",
     auth: {
-        user: config.gmail.username,
+        user: config.gmail.email,
         pass: config.gmail.password
     }
 });
 var downMessage = {
-    from: "Mariano Carballal <marianocarballal@gmail.com>", // sender address
-    to: "marianocarballal@gmail.com", // list of receivers
-    subject: "ASH CAIDO", // Subject line
+    from: config.gmail.name + " <"+config.gmail.email+">", // sender address
+    to: config.recipients.join(), // list of receivers
+    subject: "Volvio ASH", // Subject line
     text: "", // plaintext body
     html: "" // html body
 }
 var upMessage = {
-    from: "Mariano Carballal <marianocarballal@gmail.com>", // sender address
-    to: "marianocarballal@gmail.com", // list of receivers
+    from: config.gmail.name + " <"+config.gmail.email+">", // sender address
+    to: config.recipients.join(), // list of receivers
     subject: "Volvio ASH", // Subject line
     text: "", // plaintext body
     html: "" // html body
@@ -39,11 +39,11 @@ function check(){
     page.open(config.site, function(status) {
         if(!eventTriggered){
             if (status !== 'success') {
-                console.log('FAIL to load the address');
+                console.log('DOWN SERVER');
                 state('down');
             }else if(status == 'success'){        
                 time_response = Date.now() - time_response;
-                console.log("Tiempo de respuesta: " + time_response + " milisegundos");     
+                console.log("Response time: " + time_response + " miliseconds");     
                 state('up');
             }
             eventTriggered = true;            
