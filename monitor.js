@@ -36,7 +36,7 @@ phantom.create(function(ph) {
 function check(){
     var eventTriggered = false;
     time_response = Date.now();    
-    page.open("http://ash.buenosaires.gob.ar", function(status) {
+    page.open(config.site, function(status) {
         if(!eventTriggered){
             if (status !== 'success') {
                 console.log('FAIL to load the address');
